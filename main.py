@@ -5,13 +5,15 @@ import pyodbc
 app = Flask(__name__)
 
 
+#Conexion a la base de datos
+
 connection_string = 'Driver={SQL Server};Server=tcp:empresa1.database.windows.net,1433;Database=Empresa 1;Uid=adminsql;Pwd=Gomezio23.;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
 
 connection = pyodbc.connect(connection_string)
 
 cursor = connection.cursor()
 
-
+#Ruta Principal: Consulta core que trae todos los campos de todas las tablas en la BD
 @app.route('/')
 def root():
     try:
@@ -36,6 +38,7 @@ def root():
         cursor.execute(query)
         rows = cursor.fetchall()
 
+#La data que se recibe se convierte en diccionario
         data = []
         for row in rows:
             new_dict = {
@@ -53,12 +56,13 @@ def root():
 
     except pyodbc.Error as ex:
         print("Database connection error:", ex)
-        return jsonify({'error': 'Error connecting to database'}), 500  # Internal server error
+        return jsonify({'error': 'Error connecting to database'}), 500  
 
     finally:
         if conn:
             conn.close()
 
+#Ruta de empleadoas que trae solo los nombres del empleado, cargo y departamento
 @app.route('/empleados')
 def get_empleados():
     try:
@@ -86,12 +90,13 @@ def get_empleados():
 
     except pyodbc.Error as ex:
         print("Database connection error:", ex)
-        return jsonify({'error': 'Error connecting to database'}), 500  # Internal server error
+        return jsonify({'error': 'Error connecting to database'}), 500  
 
     finally:
         if conn:
             conn.close()
 
+#Ruta de ids que trae los ids de las tres tablas
 @app.route('/ids')
 def get_ids():
     try:
@@ -120,6 +125,7 @@ def get_ids():
         print("Database connection error:", ex)
         return jsonify({'error': 'Error connecting to database'}), 500  # Internal server error
 
+#bloque para asegurarnos de cerrar la conexion a la base de datos
     finally:
         if conn:
             conn.close()
