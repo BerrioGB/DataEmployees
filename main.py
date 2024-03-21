@@ -62,7 +62,7 @@ def root():
         if conn:
             conn.close()
 
-#Ruta de empleadoas que trae solo los nombres del empleado, cargo y departamento
+#Ruta de empleados que trae solo los nombres del empleado, cargo y departamento
 @app.route('/empleados')
 def get_empleados():
     try:
