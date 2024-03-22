@@ -40,7 +40,7 @@ print(jobs_df)
 print("\nEmpleados DataFrame:")
 print(empleados_df)
 
-#Exportando los datos a csv, debido a que csv es el formato mas reconocido mundialmente y es mas accesible para trabajar con bajos volumenes de datos
+#Exportando los datos a csv
 departamentos_df.to_csv("./datasets/departamentos.csv",index=False)
 jobs_df.to_csv("./datasets/cargos.csv",index=False)
 empleados_df.to_csv("./datasets/empleados.csv",index=False)
@@ -55,21 +55,21 @@ connection = pyodbc.connect(connection_string)
 cursor = connection.cursor()
 
 ###Insertar Jobs o cargos
-# insert_query = """INSERT INTO cargos (job_id, cargo) VALUES (?, ?)"""
+insert_query = """INSERT INTO cargos (job_id, cargo) VALUES (?, ?)"""
 
-# for index, row in jobs_df.iterrows():
-#     job_id = row['job_id']
-#     cargo = row['cargo']
-#     cursor.execute(insert_query, (job_id, cargo))
+for index, row in jobs_df.iterrows():
+    job_id = row['job_id']
+    cargo = row['cargo']
+    cursor.execute(insert_query, (job_id, cargo))
 
 
 ###Insertar Departamentos
-# insert_query = """INSERT INTO departamentos (Departamento_id, Departamento) VALUES (?, ?)"""
+insert_query = """INSERT INTO departamentos (Departamento_id, Departamento) VALUES (?, ?)"""
 
-# for index, row in departamentos_df.iterrows():
-#     Departamento_id = row['Departamento_id']
-#     Departamento = row['Departamento']
-#     cursor.execute(insert_query, (Departamento_id, Departamento))
+for index, row in departamentos_df.iterrows():
+    Departamento_id = row['Departamento_id']
+    Departamento = row['Departamento']
+    cursor.execute(insert_query, (Departamento_id, Departamento))
 
 ###Insertar Empleados
 insert_query = """INSERT INTO empleados (empleado_id, Nombre_Empleado, job_id, Departamento_id) VALUES (?, ?, ?, ?)"""
@@ -82,7 +82,7 @@ for index, row in empleados_df.iterrows():
 
     cursor.execute(insert_query, (empleado_id, Nombre_Empleado, job_id, Departamento_id))
 
-# Cerrar la conexion para evitar el consumo de recursos
+### Cerrar la conexion para evitar el consumo de recursos
 connection.commit()
 cursor.close()
 connection.close()
