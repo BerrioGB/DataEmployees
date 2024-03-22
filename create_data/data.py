@@ -48,7 +48,7 @@ empleados_df.to_csv("./datasets/empleados.csv",index=False)
 ###inyeccion de los datos
 import pyodbc
 
-connection_string = 'Driver={SQL Server};Server=tcp:empresa1.database.windows.net,1433;Database=Empresa 1;Uid=adminsql;Pwd=Gomezio23.;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+connection_string = 'Driver={SQL Server};Server=tcp:empresa1.database.windows.net,1433;Database=Empresa 1;Uid=adminsql;Pwd=pass.;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
 
 connection = pyodbc.connect(connection_string)
 
